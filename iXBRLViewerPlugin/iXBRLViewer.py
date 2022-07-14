@@ -345,7 +345,10 @@ class IXBRLViewerBuilder:
         self.taxonomyData["rels"] = self.getRelationships()
 
         if showValidations:
-            self.taxonomyData["validation"] = self.validationErrors()
+            try:
+                self.taxonomyData["validation"] = self.validationErrors()
+            except IXBRLViewerBuilderError as error:
+                self.dts.warning('IXBRLViewerBuilderError', error.args[0])
 
         dts.info("viewer:info", "Creating iXBRL viewer")
 
